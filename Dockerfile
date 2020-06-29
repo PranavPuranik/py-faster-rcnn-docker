@@ -27,8 +27,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install easydict
 RUN pip install cython
-RUN git clone --recursive https://github.com/phtruongan/py-faster-rcnn.git
+RUN git clone --recursive https://github.com/phtruongan/py-faster-rcnn-docker.git
+WORKDIR /
 RUN cd py-faster-rcnn-docker/lib && make
+WORKDIR /usr/src/app
 RUN cd py-faster-rcnn-docker/caffe-fast-rcnn && make && make pycaffe
+WORKDIR /usr/src/app
 RUN cd py-faster-rcnn-docker && ./data/scripts/fetch_faster_rcnn_models.sh
  
